@@ -1,0 +1,28 @@
+# Image data generator for loading and augmenting images
+train_datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
+
+# Load training data
+train_generator = train_datagen.flow_from_directory(
+    'path_to_training_data',  # Folder with 'normal' and 'anomalous' subfolders
+    target_size=(IMG_HEIGHT, IMG_WIDTH),
+    batch_size=BATCH_SIZE,
+    class_mode=None,  # Since we're using unsupervised learning
+    subset='training'
+)
+
+validation_generator = train_datagen.flow_from_directory(
+    'path_to_training_data',
+    target_size=(IMG_HEIGHT, IMG_WIDTH),
+    batch_size=BATCH_SIZE,
+    class_mode=None,
+    subset='validation'
+)
+
+# Train the autoencoder on normal traffic data
+autoencoder.fit(
+    train_generator,
+    steps_per_epoch=len(train_generator),
+    epochs=50,
+    validation_data=validation_generator,
+    validation_steps=len(validation_generator)
+)

@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+# Function to calculate NDVI
+def calculate_ndvi(nir_band, red_band):
+    # Convert to float to avoid division issues
+    nir = nir_band.astype(float)
+    red = red_band.astype(float)
+    # NDVI formula
+    ndvi = (nir - red) / (nir + red + 1e-6)  # Adding a small value to avoid division by zero
+    return ndvi
+
+# Load NIR and Red bands (Assuming the images are already aligned)
+nir_band = cv2.imread('nir_image.png', cv2.IMREAD_GRAYSCALE)  # NIR band
+red_band = cv2.imread('red_image.png', cv2.IMREAD_GRAYSCALE)  # Red band
+
+# Calculate NDVI
+ndvi = calculate_ndvi(nir_band, red_band)
+cv2.imshow('NDVI', ndvi)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

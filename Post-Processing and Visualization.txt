@@ -1,0 +1,7 @@
+import matplotlib.pyplot as plt
+
+# Display NDVI with a color map
+plt.imshow(ndvi, cmap='RdYlGn')
+plt.colorbar()
+plt.title("NDVI of Tree Leaves")
+plt.show()
